@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Assets\\HairRest\\Runtime\\GuideHairResources.cs",
+      "copied": "references\\orientation\\Runtime\\GuideHairResources.cs",
+      "sha256": "5dbf2d56a6ab95bee9f6116c8678c0df48fb5e853422fa1767b1c2205921410f"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Assets\\HairRest\\Runtime\\GuideHairFrames.cs",
+      "copied": "references\\orientation\\Runtime\\GuideHairFrames.cs",
+      "sha256": "21478d17406fad166f319b5e77595efdcd2b71b1d6ebb36970386d98cce8c721"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Assets\\HairRest\\Runtime\\GuideHairOrientationSolver.cs",
+      "copied": "references\\orientation\\Runtime\\GuideHairOrientationSolver.cs",
+      "sha256": "f366d52703a87f1d068fa1083d9fbc27746435c429b9c3a84e6d2b10b028f5f3"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Assets\\HairRest\\Runtime\\GuideHairRuntime.cs",
+      "copied": "references\\orientation\\Runtime\\GuideHairRuntime.cs",
+      "sha256": "11357676aa1cb90e28c04fcbede26633e28075b42139a7e129f19bbe4be3065b"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Assets\\HairRest\\Shaders\\GuideQuaternion.hlsl",
+      "copied": "references\\orientation\\Shaders\\GuideQuaternion.hlsl",
+      "sha256": "36b066253334b0e11b35c92759a5628a1b4d8b90b038b6160bfcba618854f740"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Assets\\HairRest\\Shaders\\GuideOrientationLocal.hlsl",
+      "copied": "references\\orientation\\Shaders\\GuideOrientationLocal.hlsl",
+      "sha256": "7e783ce456259f2e43bd754f055a1df2bd91b76eabe91558ec1b291d8687a3c3"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Assets\\HairRest\\Shaders\\GuideMaterialFrames.shader",
+      "copied": "references\\orientation\\Shaders\\GuideMaterialFrames.shader",
+      "sha256": "e74a0e994ed39a029d1e822add72dc02b6cdc7b9ec772d05292097b7904c2229"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Assets\\HairRest\\Resources\\StableCosseratOrientation.compute",
+      "copied": "references\\orientation\\Resources\\StableCosseratOrientation.compute",
+      "sha256": "1790e7b88f7cf99278d3b2321d628245e8240299ff5d05e37794fb9a2f39afb8"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Assets\\HairRest\\ORIENTATION_SOLVER.md",
+      "copied": "references\\orientation\\ORIENTATION_SOLVER.md",
+      "sha256": "5a8a0d18443220f6724ce8839ebe8d3ad5af6b369af17b381d18af24ff38811a"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Assets\\HairRest\\Editor\\OrientationLocalReference.cs",
+      "copied": "references\\orientation\\Editor\\OrientationLocalReference.cs",
+      "sha256": "916f814485760804645d54c67bd75da2922d450e9dd3eb2db246e041e1e508cf"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Assets\\HairRest\\Editor\\OrientationRobustnessValidation.cs",
+      "copied": "references\\orientation\\Editor\\OrientationRobustnessValidation.cs",
+      "sha256": "9bc53b04998fbe591f7c0a8cd6df67d1be95e5a5d774a940b236d06003dc2060"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Assets\\HairRest\\Editor\\OrientationRobustnessMathValidation.cs",
+      "copied": "references\\orientation\\Editor\\OrientationRobustnessMathValidation.cs",
+      "sha256": "3670e151a1cfcb72ba517bf3fec5d201b177881e991bf4bea8270ba6397e3908"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Assets\\HairRest\\Editor\\OrientationRobustnessGpuValidation.cs",
+      "copied": "references\\orientation\\Editor\\OrientationRobustnessGpuValidation.cs",
+      "sha256": "5e444d9dfc07f958d72a62b9323f7be1bfc9fc1672a324ee7a10f3662cb9b484"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Assets\\HairRest\\Editor\\OrientationLocalValidation.compute",
+      "copied": "references\\orientation\\Editor\\OrientationLocalValidation.compute",
+      "sha256": "ccc5b05b579c79c07e1ff350b5273b9be978919b9368a7fa3c032f5cc90f3362"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Assets\\HairRest\\Editor\\GuideHairOrientationValidation.cs",
+      "copied": "references\\orientation\\Editor\\GuideHairOrientationValidation.cs",
+      "sha256": "9d72e694e9041e95165b688df8f692beb4056cd64866216934bd79f36b4dfae9"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Tools\\HairRest\\Validation\\OrientationRobustness\\REPORT.md",
+      "copied": "references\\orientation\\historical\\REPORT.md",
+      "sha256": "7c20c139fe4dad0a1d29bb799f030a6137b0226aaa5c16de9508cfa6d102fc89"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Tools\\HairRest\\Validation\\OrientationRobustness\\local-cases.csv",
+      "copied": "references\\orientation\\historical\\local-cases.csv",
+      "sha256": "94f28d0d3ed33e63336d2611be3cdc638f8ad6dc9a3aa958dbab9dd4b9cc2208"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Tools\\HairRest\\Validation\\OrientationRobustness\\local-gpu.txt",
+      "copied": "references\\orientation\\historical\\local-gpu.txt",
+      "sha256": "ce17275f02dc586b7ed013729e7bbda2ce0e125bce389c04ccb4c97c88e791ff"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Tools\\HairRest\\Validation\\OrientationRobustness\\cpu-math.txt",
+      "copied": "references\\orientation\\historical\\cpu-math.txt",
+      "sha256": "654d6180e17b61e839ed7c6a60e743c0c002f9102d81026527e5344d2fe045d7"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Tools\\HairRest\\Validation\\OrientationRobustness\\Regression\\iterations.csv",
+      "copied": "references\\orientation\\historical\\Regression\\iterations.csv",
+      "sha256": "3a4ce6e1f004cb9379560e56ef2e55b7e0286ef8940e3fecee32093d190cbf4b"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Tools\\HairRest\\Validation\\OrientationRobustness\\Regression\\summary.txt",
+      "copied": "references\\orientation\\historical\\Regression\\summary.txt",
+      "sha256": "8de1cea0e281f7edbf8560b386711885b8ed03b4a518d65744b294a97e8f35cf"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Tools\\HairRest\\References\\StableCosserat-CPU-LICENSE.txt",
+      "copied": "references\\orientation\\StableCosserat-CPU-LICENSE.txt",
+      "sha256": "1fca26bf76f122067f665ede17765e794a8fcdd7a0de65f5517fdb04aec31bc6"
+    },
+    {
+      "source": "C:\\Users\\caw20\\MyProject\\UnityProject\\RealTimeHairSimulation\\Tools\\HairRest\\Validation\\GuideState\\current.txt",
+      "copied": "references\\orientation\\historical\\guide-state.txt",
+      "sha256": "77b68a5a82e298d7ec2b7625704437159430f2de4f6e7795eeedb24d82c2bcc2"
+    },
+    {
+      "native": "shaders\\orientation\\GuideOrientationLocal.hlsl",
+      "sha256": "7e783ce456259f2e43bd754f055a1df2bd91b76eabe91558ec1b291d8687a3c3"
+    },
+    {
+      "native": "shaders\\orientation\\GuideQuaternion.hlsl",
+      "sha256": "36b066253334b0e11b35c92759a5628a1b4d8b90b038b6160bfcba618854f740"
+    },
+    {
+      "native": "shaders\\orientation\\GuideSolve.hlsl",
+      "sha256": "248a9f5cfbda700f357076bb5b1619904ec0223259e11a51f020af344ce4bdbb"
+    },
+    {
+      "native": "shaders\\orientation\\LocalValidation.hlsl",
+      "sha256": "3ba9aacb5026345442a762241578e4bea55f79f7a74222c4e0f097bcfedeb2c5"
+    },
+    {
+      "native": "shaders\\orientation\\MaterialFrames.hlsl",
+      "sha256": "fe268077a5c16a332ca7a251db835652eb3d95dc48f91764868c468fc36365b7"
+    }
+  ]
+}

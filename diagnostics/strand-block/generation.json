@@ -1,0 +1,5 @@
+{
+  "referenceSHA256": "a72e12ddc0c380f82fbdea066a7e95c4f0a39ab5757c0d4e00d0192f057802dd",
+  "equations": "exact evaluate/diagnose bodies; accumulator/type interface only",
+  "nonlinear": "exact normalize/lambda/retry/line/convergence/cap policy; linear section delegated; failed factorization reported instead of throwing; observations added"
+}

@@ -1,0 +1,39 @@
+#pragma kernel LegacyLocal
+#pragma kernel RobustLocal
+#include "../Shaders/GuideOrientationLocal.hlsl"
+#include "../Shaders/GuideQuaternion.hlsl"
+StructuredBuffer<float4> _Inputs; // triples: q_old, v (w unused), frozen b
+RWStructuredBuffer<float4> _Outputs; // four float4 per case
+uint _Count;
+// Frozen pre-patch arithmetic, retained only for regression evidence. Never called by runtime.
+[numthreads(64,1,1)]
+void LegacyLocal(uint3 id:SV_DispatchThreadID)
+{
+    uint i=id.x;if(i>=_Count)return;
+    float4 q=_Inputs[3*i],b=_Inputs[3*i+2];float3 v=_Inputs[3*i+1].xyz;
+    float vl=length(v),bl=length(b),lambda=vl+bl,initial=lambda;
+    float4 a=QuatMultiply(QuatMultiply(float4(v,0),b),float4(0,0,1,0));
+    uint steps=0;
+    for(uint j=0;j<32;j++)
+    {
+        steps++;
+        float next=sqrt(length(a+lambda*b)+vl*vl);
+        if(abs(next-lambda)<=1e-7*max(lambda,1e-20)){lambda=next;break;}
+        lambda=next;
+    }
+    float4 n=a+lambda*b;
+    _Outputs[4*i]=QuatValid(n)?QuatNormalize(n):0;
+    _Outputs[4*i+1]=float4(initial,lambda,lambda-vl,length(n));
+    _Outputs[4*i+2]=float4(steps,QuatValid(n)?1:0,0,0);
+    _Outputs[4*i+3]=a;
+}
+[numthreads(64,1,1)]
+void RobustLocal(uint3 id:SV_DispatchThreadID)
+{
+    uint i=id.x;if(i>=_Count)return;
+    float4 old=_Inputs[3*i],b=_Inputs[3*i+2],q;float3 v=_Inputs[3*i+1].xyz;uint kind;
+    bool ok=SolveOrientationLocal(old,v,b,q,kind);
+    _Outputs[4*i]=q;
+    _Outputs[4*i+1]=float4(ok?1:0,kind,0,0);
+    _Outputs[4*i+2]=0;_Outputs[4*i+3]=0;
+}

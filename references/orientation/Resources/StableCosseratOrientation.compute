@@ -1,0 +1,162 @@
+#pragma kernel SolveOrientation
+// Mathematical implementation after Hsu et al. and the MIT CPU reference.
+// Copyright notice: Tools/HairRest/References/StableCosserat-CPU-LICENSE.txt.
+//
+// [목적과 범위]
+// 위치를 고정한 채 material frame의 회전만 준정적으로 구한다.
+// 논문 Sec. 3, 식 (7): min_q E_total(x_fixed, q), subject to |q_i| = 1.
+// 회전 관성 J=0이므로 각속도/각운동량을 적분하지 않는다. lambda는 단위 길이
+// 조건에서 나온 보조 스칼라이며, 시간 간격이나 XPBD compliance가 아니다.
+//
+// [참고 자료와 식 번호]
+// Hsu et al., Stable Cosserat Rods, SIGGRAPH 2025:
+// https://graphics.cs.utah.edu/research/projects/stable-cosserat-rods/Stable_Cosserat_Rods-SIGGRAPH25.pdf
+// Sec. 2.2: 식 (1) SS 제약, (3)-(4) BT 제약/부호 선택, (5) 에너지/강성 스케일.
+// Sec. 3.1: 식 (8) 국소 최소화, (14)-(16) 평형식과 v/b, (18) q(lambda).
+// Sec. 3.2: 식 (22) lambda 초기 근사. Sec. 3.4: 식 (25) 고정점 보정.
+// 공식 CPU: StableCosseratRods, revision 11081ed22ceb3f8824f447b64557745895676d0a,
+// KittenEngine/Cosserat/sim/lambda.cpp의 Sim::iterateSegLambda / iterateSegLambdaExact.
+// CPU의 +X 접선축을 이 프로젝트의 +Z로 바꿨다. 수식/검증 상세: ../ORIENTATION_SOLVER.md.
+//
+// [쿼터니언 규약]
+// Unity와 동일한 (x,y,z,w), Hamilton 곱. 곱의 순서를 바꾸면 다른 회전이다.
+// 단위 q의 inverse는 conjugate(q). material +Z=e3=(0,0,1)가 접선축이며,
+// d3=rotate(q,e3). 순수 쿼터니언 e3=(0,0,1,0)는 항등회전 (0,0,0,1)과 다르다.
+
+#include "../Shaders/GuideOrientationLocal.hlsl"
+// CPU GuideStrandRange와 동일한 6 uint/24 byte. 모든 범위는 root-to-tip 순서.
+// 로컬 segment j의 양 끝: firstVertex+j, firstVertex+j+1.
+// 로컬 bend j: segment j와 j+1 사이. 2정점 strand는 1 segment, 0 bend.
+struct Range { uint firstVertex,vertexCount,firstSegment,segmentCount,firstBend,bendCount; };
+
+// 입력은 모두 읽기 전용. Position은 동적 위치 버퍼를 빌려 읽지만 여기서는 고정된다.
+// RestBendTwist는 conj(qRest_i)*qRest_(i+1)의 full quaternion이며 곡률 벡터가 아니다.
+StructuredBuffer<Range> _Ranges;
+StructuredBuffer<float3> _Position;
+StructuredBuffer<float> _RestLength;
+StructuredBuffer<float4> _RestBendTwist;
+StructuredBuffer<float4> _RestOrientation;
+
+// 쓰기 가능한 물리 상태는 Orientation뿐이다. Error는 strand별 진단 코드이다.
+// Velocity는 아예 바인딩하지 않는다. rest 데이터/위치/질량/반경은 수정하지 않는다.
+RWStructuredBuffer<float4> _Orientation;
+RWStructuredBuffer<uint> _Error;
+// Per-strand solver diagnostics, not physical state. Accumulate over all chunks of Run(N).
+struct SolveStats { uint regular,fallback,hard,rejected,failures; float lastSweep; };
+RWStructuredBuffer<SolveStats> _Stats;
+uint _FirstChunk;
+float PhysicalLocalEnergy(float4 q,float3 derivative,float kss,float4 leftTarget,float kl,float4 rightTarget,float kr)
+{
+    // Same original SS and pole-minimized BT constraints, scaled together to avoid overflow.
+    float scale=max(kss,max(kl,kr));
+    float3 css=derivative-QuatRotate(q,float3(0,0,1));
+    float4 cl=q-(dot(q,leftTarget)>=0?1:-1)*leftTarget;
+    float4 cr=q-(dot(q,rightTarget)>=0?1:-1)*rightTarget;
+    return .5*((kss/scale)*dot(css,css)+(kl/scale)*dot(cl,cl)+(kr/scale)*dot(cr,cr));
+}
+
+// 전체 버퍼 크기, 참여 strand prefix 크기, 이번 dispatch의 sweep 횟수, root pin 여부.
+uint _Strands,_Vertices,_Segments,_Bends,_Participating,_Iterations,_PinRoot;
+
+// 임시 재료값: 기본 SS=1 N, BT=1e-5 N*m^2 (C#에서 설정). 최종 헤어 보정값은 아니다.
+// 식 (5): kss_i=BaseSS*L_i, kbt_i=4*BaseBT/L_i. 물리 질량과 별개이다.
+float _BaseSS,_BaseBT;
+
+// 식 (3)-(4): C_bt=conj(q_i)*q_(i+1)-phi*q0.
+// |rel-rest|^2 <= |rel+rest|^2는 dot(rel,rest)>=0과 동치이다. 동률은 +1.
+// rest 프레임의 부호 연속성과 별개로 매 갱신 시 가까운 pole을 다시 고른다.
+// phi는 국소 임시값이며 영구 GPU 버퍼에 저장하지 않는다.
+float Pole(float4 rel,float4 rest) { return dot(rel,rest)>=0 ? 1 : -1; }
+
+// Stable Cosserat Rods Eq. (15),(16),(18),(22),(25).
+// CPU reference: Sim::iterateSegLambdaExact (lambda.cpp), +X changed to +Z.
+// Only orientations and diagnostic status are UAVs. Positions/rest/velocities cannot be written.
+[numthreads(64,1,1)]
+void SolveOrientation(uint3 id:SV_DispatchThreadID)
+{
+    // GPU thread 하나가 strand 하나 전체를 독점한다. 64는 strand당 스레드 수가
+    // 아니라 그룹당 스레드 수이다. 그룹 수=ceil(참여 strand 수/64), 남는 lane은 종료.
+    uint strand=id.x;
+    if(strand>=_Participating || strand>=_Strands) return;
+    if(_FirstChunk!=0) { SolveStats empty=(SolveStats)0; _Stats[strand]=empty; }
+    // Failure stays latched until explicit Reset; a later chunk must not hide it.
+    if(_Error[strand]!=0)return;
+    Range r=_Ranges[strand];
+    // 인덱싱 전에 packed 범위와 개수를 검사한다. first+count 대신 total-count와
+    // 비교하여 덧셈 overflow를 피한다. 실패 코드 1: 잘못된 topology/range.
+    if(r.vertexCount<2 || r.vertexCount>_Vertices || r.firstVertex>_Vertices-r.vertexCount ||
+       r.segmentCount!=r.vertexCount-1 || r.segmentCount>_Segments || r.firstSegment>_Segments-r.segmentCount ||
+       r.bendCount!=r.vertexCount-2 || r.bendCount>_Bends || r.firstBend>_Bends-r.bendCount)
+    { _Error[strand]=1; return; }
+    
+    // 해당 strand를 쓰기 전에 입력을 검사한다. 0/NaN/Inf 쿼터니언을 항등회전으로
+    // 숨기지 않는다. 코드 2: 회전, 3: 위치/길이, 4: rest BT, 5: 갱신 결과 오류.
+    // QuatValid는 유한성/비영 여부 검사이며 단위 길이 오차는 별도 진단에서 측정한다.
+    for(uint check=0;check<r.segmentCount;check++)
+    {
+        uint s=r.firstSegment+check;
+        if(!QuatValid(_Orientation[s]) || !QuatValid(_RestOrientation[s])) { _Error[strand]=2; return; }
+        if(!isfinite(_RestLength[s]) || _RestLength[s]<=1e-7 || !all(isfinite(_Position[r.firstVertex+check])) ||
+           !all(isfinite(_Position[r.firstVertex+check+1]))) { _Error[strand]=3; return; }
+        if(check<r.bendCount && !QuatValid(_RestBendTwist[r.firstBend+check])) { _Error[strand]=4; return; }
+    }
+    // One thread exclusively owns a strand, including its root-to-tip serial GS sweeps.
+    // 식 (8)의 국소 문제: E_ss(j)+E_bt(j-1)+E_bt(j)를 이웃 회전 고정 하에 최소화.
+    // root부터 tip까지 즉시 덮어쓰므로 왼쪽 이웃은 이번 sweep의 최신 값,
+    // 오른쪽은 아직 갱신 전 값이다. 이것이 Gauss-Seidel이며 Jacobi 평균이 아니다.
+    // strand 간에는 회전 버퍼 범위가 겹치지 않아 atomics/그룹 동기화가 필요 없다.
+    for(uint iteration=0;iteration<_Iterations;iteration++)
+    {
+    SolveStats sweepStats=_Stats[strand];sweepStats.lastSweep=0;_Stats[strand]=sweepStats;
+    for(uint j=0;j<r.segmentCount;j++)
+    {
+        uint s=r.firstSegment+j;
+        // 검증용 root frame 고정: 초기화/reset/perturb가 rest 값을 보장하며 여기서는
+        // 첫 segment를 쓰지 않는다. root 위치 고정과는 별개이고 모든 위치는 이미 고정이다.
+        if(j==0 && _PinRoot!=0) continue;
+        float4 q=_Orientation[s],b=0,leftTarget=0,rightTarget=0;float kl=0,kr=0;
+        float L=_RestLength[s];
+        float kss=_BaseSS*L;
+        // 식 (1): C_ss=edge/L-d3. E_ss=0.5*kss*|C_ss|^2.
+        // 식 (15): v=-2*kss*edge/L. 여기서 v는 '속도'가 아니라 SS 평형식 계수이다!
+        // 식 (14)의 v*q*e3+b-lambda*q=0으로 SS와 양쪽 BT 효과를 모은다.
+        float3 v=(-2*kss/L)*(_Position[r.firstVertex+j+1]-_Position[r.firstVertex+j]);
+        if(j>0)
+        {
+            // 식 (16)의 왼쪽 항: kbt_left*phi_left*q_left*q0_left.
+            // q0_left는 left -> 현재의 상대 회전이므로 conjugate 없이 오른쪽에 곱한다.
+            // 이 bend의 길이 기준은 왼쪽 segment: L_(j-1). 평균 길이를 사용하지 않는다.
+            float4 left=_Orientation[s-1],rest=_RestBendTwist[r.firstBend+j-1];
+            float phi=Pole(QuatMultiply(QuatConjugate(left),q),rest);
+            kl=4*_BaseBT/_RestLength[s-1];leftTarget=QuatMultiply(left,rest);b+=kl*phi*leftTarget;
+        }
+        if(j+1<r.segmentCount)
+        {
+            // 식 (16)의 오른쪽 항: kbt_right*phi_right*q_right*conj(q0_right).
+            // q0_right는 현재 -> right이므로 역회전으로 현재 프레임 목표를 얻는다.
+            // 이 bend의 왼쪽 segment가 현재 j이므로 강성 분모는 현재 L이다.
+            float4 right=_Orientation[s+1],rest=_RestBendTwist[r.firstBend+j];
+            float phi=Pole(QuatMultiply(QuatConjugate(q),right),rest);
+            kr=4*_BaseBT/L;rightTarget=QuatMultiply(right,QuatConjugate(rest));b+=kr*phi*rightTarget;
+        }
+        // 수식 (18),(22),(25)의 ordinary 갱신과 같은 목적함수의 특이점 fallback은
+        // GuideOrientationLocal.hlsl에 있다. 이웃/pole 수집은 이 kernel에서 한 번 수행한다.
+        float4 result;uint kind;
+        bool accepted=SolveOrientationLocal(q,v,b,result,kind);
+        SolveStats stats=_Stats[strand];
+        if(kind==0)stats.regular++;else {stats.fallback++;stats.rejected++;if(kind==2)stats.hard++;}
+        // 실제 closest-pole 에너지 검사: hemisphere 정리 전/후 모두 동일한 물리 에너지.
+        float before=PhysicalLocalEnergy(q,(_Position[r.firstVertex+j+1]-_Position[r.firstVertex+j])/L,kss,leftTarget,kl,rightTarget,kr);
+        float after=PhysicalLocalEnergy(result,(_Position[r.firstVertex+j+1]-_Position[r.firstVertex+j])/L,kss,leftTarget,kl,rightTarget,kr);
+        if(!accepted || !isfinite(after) || after>before+6e-6)
+        {
+            stats.failures++;_Stats[strand]=stats;_Error[strand]=6;return;
+        }
+        // Frozen branch 인증 후 표현상 hemisphere만 정리한다. b를 그대로 둔 채
+        // 부호가 바뀐 q의 branch energy를 비교하면 잘못된 판정이 된다.
+        if(dot(result,q)<0)result=-result;
+        stats.lastSweep=max(stats.lastSweep,QuatRotationChord(q,result));_Stats[strand]=stats;
+        _Orientation[s]=result;
+    }
+    }
+}

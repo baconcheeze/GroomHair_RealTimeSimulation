@@ -1,0 +1,52 @@
+﻿cmake_minimum_required(VERSION 3.24)
+project(HairLabDX12 LANGUAGES CXX)
+if(NOT WIN32 OR NOT MSVC OR NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
+ message(FATAL_ERROR "Windows x64 / MSVC required")
+endif()
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+# Only upstream Jolt hair is linked. No retired solver targets or deployment rules.
+set(JPH_USE_DX12 ON CACHE BOOL "" FORCE)
+set(JPH_USE_VK OFF CACHE BOOL "" FORCE)
+set(JPH_USE_MTL OFF CACHE BOOL "" FORCE)
+set(JPH_USE_CPU_COMPUTE OFF CACHE BOOL "" FORCE)
+set(ENABLE_INSTALL OFF CACHE BOOL "" FORCE)
+set(INTERPROCEDURAL_OPTIMIZATION OFF CACHE BOOL "" FORCE)
+set(ENABLE_ALL_WARNINGS OFF CACHE BOOL "" FORCE)
+set(OVERRIDE_CXX_FLAGS OFF CACHE BOOL "" FORCE)
+set(CPP_EXCEPTIONS_ENABLED ON CACHE BOOL "" FORCE)
+set(FLOATING_POINT_EXCEPTIONS_ENABLED OFF CACHE BOOL "" FORCE)
+add_subdirectory(third_party/JoltPhysics/Build jolt)
+set(IMGUI_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui")
+add_library(imgui STATIC ${IMGUI_DIR}/imgui.cpp ${IMGUI_DIR}/imgui_draw.cpp ${IMGUI_DIR}/imgui_tables.cpp ${IMGUI_DIR}/imgui_widgets.cpp ${IMGUI_DIR}/backends/imgui_impl_win32.cpp ${IMGUI_DIR}/backends/imgui_impl_dx12.cpp)
+target_include_directories(imgui PUBLIC ${IMGUI_DIR} ${IMGUI_DIR}/backends)
+target_compile_definitions(imgui PRIVATE UNICODE _UNICODE NOMINMAX WIN32_LEAN_AND_MEAN)
+add_executable(HairLabDX12 WIN32 src/JoltMain.cpp src/AirResistanceChecks.cpp src/BodyPrimitiveChecks.cpp src/GraphicsTimings.cpp src/JoltScene.cpp src/CharacterLocomotion.cpp src/SceneCapture.cpp src/CharacterTexture.cpp src/DenimJacket.cpp src/OrbitCamera.h)
+target_include_directories(HairLabDX12 PRIVATE third_party/JoltPhysics/Samples)
+target_compile_definitions(HairLabDX12 PRIVATE UNICODE _UNICODE NOMINMAX WIN32_LEAN_AND_MEAN)
+target_compile_options(HairLabDX12 PRIVATE /W4 /utf-8)
+target_link_libraries(HairLabDX12 PRIVATE Jolt imgui d3d12 dxgi dxguid d3dcompiler shell32 windowscodecs ole32)
+set_target_properties(HairLabDX12 PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:HairLabDX12>")
+set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT HairLabDX12)
+file(GLOB _dxc_paths "C:/Program Files (x86)/Windows Kits/10/bin/*/x64")
+list(SORT _dxc_paths COMPARE NATURAL ORDER DESCENDING)
+find_program(APP_DXC NAMES dxc.exe HINTS ${_dxc_paths} REQUIRED)
+get_filename_component(_dxc_dir "${APP_DXC}" DIRECTORY)
+add_custom_target(JoltRuntime ALL
+ COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:HairLabDX12>/Assets" "$<TARGET_FILE_DIR:HairLabDX12>/JoltShaders" "$<TARGET_FILE_DIR:HairLabDX12>/shaders"
+ COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_BINARY_DIR}/jolt/Shaders" "$<TARGET_FILE_DIR:HairLabDX12>/JoltShaders"
+ COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/moca" "$<TARGET_FILE_DIR:HairLabDX12>/Assets/Moca"
+ COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/shaders/JoltDisplay.hlsl" "$<TARGET_FILE_DIR:HairLabDX12>/shaders"
+ COMMAND ${CMAKE_COMMAND} -E copy_if_different "${_dxc_dir}/dxcompiler.dll" "${_dxc_dir}/dxil.dll" "${CMAKE_CURRENT_SOURCE_DIR}/third_party/JoltPhysics/LICENSE" "$<TARGET_FILE_DIR:HairLabDX12>"
+ COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/JOLT_ASSETS.md" "$<TARGET_FILE_DIR:HairLabDX12>/Assets"
+ COMMAND ${CMAKE_COMMAND} -E copy_if_different "${IMGUI_DIR}/LICENSE.txt" "$<TARGET_FILE_DIR:HairLabDX12>/IMGUI-LICENSE.txt"
+ DEPENDS Jolt)
+add_dependencies(HairLabDX12 JoltRuntime)
+include(CTest)
+if(BUILD_TESTING)
+ add_executable(WalkingChecks tests/WalkingChecks.cpp src/CharacterLocomotion.cpp)
+ target_include_directories(WalkingChecks PRIVATE src)
+ target_link_libraries(WalkingChecks PRIVATE Jolt)
+ target_compile_options(WalkingChecks PRIVATE /W4 /utf-8)
+ add_test(NAME walking-cpu COMMAND WalkingChecks "${CMAKE_CURRENT_SOURCE_DIR}/assets/moca")
+endif()

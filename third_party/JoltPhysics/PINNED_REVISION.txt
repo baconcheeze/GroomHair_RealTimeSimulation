@@ -1,0 +1,6 @@
+Jolt Physics v5.6.0
+commit e77f175595e64cb44218cc9d9d56fc365ad0e36a
+https://github.com/jrouwe/JoltPhysics/tree/e77f175595e64cb44218cc9d9d56fc365ad0e36a
+Exported from the immutable Git commit, not the modified external worktree.
+Integration patch: Jolt/Jolt.cmake places generated DXIL in the build directory and uses an absolute shader include path.
+Hair physics source and shader formulas are unchanged.

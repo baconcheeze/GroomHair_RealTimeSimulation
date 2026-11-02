@@ -1,0 +1,15 @@
+* text=auto
+*.cpp text
+*.h text
+*.hlsl text
+*.cmake text
+*.ps1 text
+*.py text
+*.md text
+*.png -text
+*.jpg -text
+*.jpeg -text
+*.avif -text
+*.webp -text
+*.gif -text
+*.pdf -text

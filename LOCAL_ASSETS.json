@@ -1,0 +1,720 @@
+{
+  "note": "Files intentionally excluded from Git. Restore separately with license-compliant access; hashes alone do not back up the files.",
+  "files": [
+    {
+      "path": "assets/0828 모카님패키지.unitypackage",
+      "bytes": 1042760798,
+      "sha256": "19c16db3c6ef1b5e31f680199d57fbe304fa894df8f50925751ecb23273eb447"
+    },
+    {
+      "path": "assets/aster/amethyst.hair",
+      "bytes": 6144128,
+      "sha256": "0bbf29458d06c339f93dec11c7cee731d8098de18a94756da5643f0eb02b23d9"
+    },
+    {
+      "path": "assets/aster/character.bin",
+      "bytes": 1956808,
+      "sha256": "82fceacdd04c2ec049c51b7e3fc39127ad4a55edbce8091870dc9747f69a35e1"
+    },
+    {
+      "path": "assets/aster/colors.bin",
+      "bytes": 627796,
+      "sha256": "c16bac0c78dd1ccafdad2f641dfdbd7b9f596613fe33a2ab6e61b31351235d99"
+    },
+    {
+      "path": "assets/aster/groom.materials",
+      "bytes": 64004,
+      "sha256": "2f322795f27236fd45498c6ce861392a7c192302dbcdac52809df74bce98194e"
+    },
+    {
+      "path": "assets/aster/LICENSE.txt",
+      "bytes": 332,
+      "sha256": "77eef98e5b7a9ef417062b59fc8c936781df4085416d6dc3844defdc5ee991b6"
+    },
+    {
+      "path": "assets/aster/manifest.json",
+      "bytes": 1014,
+      "sha256": "95a23c817cb71fd6bfd5d66c38bc72533c979d49e2bbcc17cc2284092ed405da"
+    },
+    {
+      "path": "assets/aster/normals.bin",
+      "bytes": 627796,
+      "sha256": "50d38f4a86ec8cc2c2bc4b31ed4156813c7e23cb43931799a39a3b5c09bc7802"
+    },
+    {
+      "path": "assets/dataset.txt",
+      "bytes": 16,
+      "sha256": "ab0263233453337b35a9a612aa808f544f4da0d111cce0e60714931eb7ac8534"
+    },
+    {
+      "path": "assets/hair/SelectedRest.bytes",
+      "bytes": 11023208,
+      "sha256": "8d1c6197fd3cb2664d84b0914d61d323115c32d40ffef3a08ecf97815a343bfa"
+    },
+    {
+      "path": "assets/head/JoltHeadRest.bytes",
+      "bytes": 958328,
+      "sha256": "9a66c976c7bcd3123f9870e3c36d8cccc30f715faf07842bab8d2197606f287d"
+    },
+    {
+      "path": "assets/head/SelectedHead.nhm",
+      "bytes": 291592,
+      "sha256": "547972aeb8b6ab53c016dbcae0f9e2448aedc3c0fdf761c693146b0f424a66e5"
+    },
+    {
+      "path": "assets/imported/moca/package-reference/0ac0c39a6fd436d4baf2c1014a3dca3c.prefab",
+      "bytes": 403535,
+      "sha256": "eb011f27a1ec159d7d71ee0aa6632de5755ce94424d4f80091a27f6bb6b4accf"
+    },
+    {
+      "path": "assets/imported/moca/package-reference/1e2eea07c7ba97749b1d8f3591744328.prefab",
+      "bytes": 1293903,
+      "sha256": "cdafdb0415bbd8f22f58ab041444aafb4ebc5b22d864d2d5fa58f20fa2e7e1f8"
+    },
+    {
+      "path": "assets/imported/moca/package-reference/72e5f80fb3b1cc1488e612f3bb5efe63.mat",
+      "bytes": 24524,
+      "sha256": "b4653aa58b82396784f994bf8e081c933733a318c7ce1f4f8812c5418a3d7c2f"
+    },
+    {
+      "path": "assets/imported/moca/package-reference/cde65f0ef62b8194f925051bdc01edcc.mat",
+      "bytes": 24705,
+      "sha256": "5221a686ae66a2667c1eaa2eed8d14264cd87b37f8bd800e1ada8e40c661b2ba"
+    },
+    {
+      "path": "assets/imported/moca/source/2b949e57936630c418248b9fe0206bee.psd",
+      "bytes": 11762694,
+      "sha256": "d5b97136fb737d3b7136e184042a9114fa0fb26906d6398e5563c5543e460ce6"
+    },
+    {
+      "path": "assets/imported/moca/source/632a70d5d1771cd488f8776b5fa3593a.psd",
+      "bytes": 43074649,
+      "sha256": "a6c24e2fa0fb9b8f18b45df6372fc16361f91bfa29211a60331a73b14b4d900f"
+    },
+    {
+      "path": "assets/imported/moca/SOURCE.json",
+      "bytes": 241,
+      "sha256": "70c1071dead5539a020cb5a9a2c26b2fa6433b090cad3795cd7f3cf875333010"
+    },
+    {
+      "path": "assets/imported/moca/모카님.vrm",
+      "bytes": 237456952,
+      "sha256": "d9371de1ed3080baf927b911b86c332a7683baf8fc63df052cdd06899f50efd2"
+    },
+    {
+      "path": "assets/manifest.json",
+      "bytes": 5976,
+      "sha256": "488fefd7201add99b78805e205544ef94915b03eb2ae9966cd1d83550920aeca"
+    },
+    {
+      "path": "assets/MetaHuman/gb_long_wavy_twin_ponytail_hair.mhpkg",
+      "bytes": 54180624,
+      "sha256": "7db2855ebc1f13e93382be0d0a5eba094d3f1fef85517c1a7c94cdf5f9da2b32"
+    },
+    {
+      "path": "assets/MetaHuman/long_wavy_twin_ponytail_hair/Long_Wavy_Twin_Ponytail_Hair.abc",
+      "bytes": 27739918,
+      "sha256": "64136f1b29fecaa56c5f1cc2cb858b0f4cb2d2f59a7eb70e16085b37026270e2"
+    },
+    {
+      "path": "assets/MetaHuman/long_wavy_twin_ponytail_hair/Texture.png",
+      "bytes": 1913,
+      "sha256": "aeb71261d3dfafabff0715b8568a4df3d60bcbd094307e29111413f47c023e95"
+    },
+    {
+      "path": "assets/MetaHuman/long_wavy_twin_ponytail_hair/Usage_Guide.png",
+      "bytes": 471995,
+      "sha256": "86f1318b565fa2822629f32539dd744c95e1bf213394f72ec165f45a37f554d5"
+    },
+    {
+      "path": "assets/MetaHuman/메타휴먼1.jpg",
+      "bytes": 244527,
+      "sha256": "93319642e3045af42c9952b6f6985227faa1250c6d6d1547abec89c29ed6af69"
+    },
+    {
+      "path": "assets/MetaHuman/메타휴먼2.jpg",
+      "bytes": 236589,
+      "sha256": "81f942f9eefa9a136fa7a2fac1e4f8543f6918fb7ddd6d6449df0f8cdb8b3a34"
+    },
+    {
+      "path": "assets/MetaHuman/메타휴먼3.jpg",
+      "bytes": 135358,
+      "sha256": "20e4b658c7461c4e68a4b5739462f958a4c9a2b4d0835deeebdf381459c475b7"
+    },
+    {
+      "path": "assets/moca/binds.bin",
+      "bytes": 20164,
+      "sha256": "43fcfa624e07c6e1b27af09c5743e982f2e1c958f4f949d9ed2f967dfb6e8ccd"
+    },
+    {
+      "path": "assets/moca/bob.hair",
+      "bytes": 10240256,
+      "sha256": "11131e32a16cf5d20da000a352c9f9980f75c29f75067ba3a2a01d661bc5901a"
+    },
+    {
+      "path": "assets/moca/bob.json",
+      "bytes": 1861,
+      "sha256": "069066139fac9d1c2e0538a7191db8f6f2033769c9ea7561518160e1d2b38311"
+    },
+    {
+      "path": "assets/moca/bob.materials",
+      "bytes": 106672,
+      "sha256": "6626ef51c2e6b124f95ce010263db75b6727c3cb0d83feb4195eb2f25bcc947d"
+    },
+    {
+      "path": "assets/moca/body-colliders.bin",
+      "bytes": 238036,
+      "sha256": "5918d185ace6f0b02c96769dd427f9190f2497763ff5d7b7d0a2696bb400e106"
+    },
+    {
+      "path": "assets/moca/body-colliders.json",
+      "bytes": 312755,
+      "sha256": "54f02903cd53d5aa29b7e862fb5693012792ebce2a100d8f37c28e153659323e"
+    },
+    {
+      "path": "assets/moca/character.bin",
+      "bytes": 4362836,
+      "sha256": "628dd9826eef4d167315940fa4f35d7b8cebf68000ef8a827e0512d028b5ed46"
+    },
+    {
+      "path": "assets/moca/colors.bin",
+      "bytes": 638964,
+      "sha256": "1b92a4d8f139fec74128b8a6ce7239816054d3bfc772af8d2a1dd3affd965af6"
+    },
+    {
+      "path": "assets/moca/denim-jacket.bin",
+      "bytes": 2188528,
+      "sha256": "338b276928979b87858f12300b8df8dd8f8ba1f91c289dcbb56d15a984524bab"
+    },
+    {
+      "path": "assets/moca/denim-jacket.json",
+      "bytes": 1255,
+      "sha256": "cd71ffd8296b26a732a0a222544ab1cb16de7c6cbc78c76bd2d4fffb74f6b644"
+    },
+    {
+      "path": "assets/moca/groom.materials",
+      "bytes": 64004,
+      "sha256": "2f322795f27236fd45498c6ce861392a7c192302dbcdac52809df74bce98194e"
+    },
+    {
+      "path": "assets/moca/LICENSE.txt",
+      "bytes": 714,
+      "sha256": "be889b65a7667951443132755631ec2be101dedefcf11cfff8190ef70e1e7c04"
+    },
+    {
+      "path": "assets/moca/manifest.json",
+      "bytes": 4765,
+      "sha256": "37b58db6b7bc2f092d70d87a6874e19dc616c3649c0901b485a076251619a4af"
+    },
+    {
+      "path": "assets/moca/metahuman-wisps.json",
+      "bytes": 749,
+      "sha256": "3c6ba0a713715185a96925f9881c645902fa2788b16a8fa6c133274eef61197d"
+    },
+    {
+      "path": "assets/moca/metahuman-wisps.shape",
+      "bytes": 45412,
+      "sha256": "eb9c9ec0d07ce2a7f45c1311e86deb1ce19c63b1ceff92d1d7baaee84b59668c"
+    },
+    {
+      "path": "assets/moca/metahuman.ears",
+      "bytes": 1556,
+      "sha256": "45c58f60035bfad2dea38e42075d6cc3adc0d74bc95e906e47316f58431a0778"
+    },
+    {
+      "path": "assets/moca/metahuman.hair",
+      "bytes": 13206656,
+      "sha256": "25e70965557988ab2cd9ad6530d0c34b83d6de92089a3cc73b67fa7c0c76f001"
+    },
+    {
+      "path": "assets/moca/metahuman.json",
+      "bytes": 68392,
+      "sha256": "67b2fbbb4d6844d13abaeafc891b4270bf6c87fda46ef341f7dfba954956f708"
+    },
+    {
+      "path": "assets/moca/metahuman.materials",
+      "bytes": 137572,
+      "sha256": "537cd7f0205221b88baae65b63fb2badcd40c88fc8ecca7110636013396f889f"
+    },
+    {
+      "path": "assets/moca/metahuman.NOTICE.txt",
+      "bytes": 863,
+      "sha256": "6648d3b5f7b7c8ca8877d66653187b7ffa29099b65c7eb65a8146452a68ea95f"
+    },
+    {
+      "path": "assets/moca/metahuman.skull",
+      "bytes": 7932,
+      "sha256": "1b27e731ede4440b181d27c45db5b74f7edf80de6de9306d290c39c59ec20615"
+    },
+    {
+      "path": "assets/moca/naruto-run.bin",
+      "bytes": 197060,
+      "sha256": "3df7cb3215a1f1413e6fdccbb204bdc02d35c1dd64610a8e529cc0baf1b27d1b"
+    },
+    {
+      "path": "assets/moca/naruto-run.json",
+      "bytes": 3724,
+      "sha256": "4ec36e8ed7e7ac2dc204bd71593bad375be3930c5399cfcc41bde4881f578d61"
+    },
+    {
+      "path": "assets/moca/outfit.json",
+      "bytes": 763,
+      "sha256": "7cb0b6bbd2ba719b23f2081bd2acf4ba1af709cbc98942f76b54bb6611ed2e9c"
+    },
+    {
+      "path": "assets/moca/rig.json",
+      "bytes": 109359,
+      "sha256": "f17df661d83639f8b58e6032ea7090f1e66bbddedfabeb99af1b85ea8ffef6d6"
+    },
+    {
+      "path": "assets/moca/scalp-patch.json",
+      "bytes": 1362,
+      "sha256": "b2e06473fdb0f10f3d5fe27a79fbb0152a1396d9d8b5552d5dd4539f7836134b"
+    },
+    {
+      "path": "assets/moca/skeleton.bin",
+      "bytes": 1264,
+      "sha256": "b89eb3aaf86250011bbcaf81ec398890079ba6bd2e91581428377a7edef16671"
+    },
+    {
+      "path": "assets/moca/studio.hair",
+      "bytes": 6144128,
+      "sha256": "d0280506307d870c3ddc569f84efc2b31035701c7e00d49e33dd123fddfe3136"
+    },
+    {
+      "path": "assets/moca/surface.bin",
+      "bytes": 2555844,
+      "sha256": "b9eb2e486a9480a474842bb5405175dfc5b45889bb9c08e33d2714b066f3d251"
+    },
+    {
+      "path": "assets/moca/textures/0.png",
+      "bytes": 191953,
+      "sha256": "8878696989466ada592b70ced512f6ebfa99b0b06ce7967c3ad2c6a4f60c36f7"
+    },
+    {
+      "path": "assets/moca/textures/1.png",
+      "bytes": 1790462,
+      "sha256": "a72ce9781c5ed620d34057fe1a3325bf7b6b905b705f5239693cd26552070dbd"
+    },
+    {
+      "path": "assets/moca/textures/2.png",
+      "bytes": 1499166,
+      "sha256": "cc9fa09fd711e8ac76cc17eecad2c4473d2670b3049d3c0c10ccf23f73056c6b"
+    },
+    {
+      "path": "assets/moca/textures/3.png",
+      "bytes": 1379718,
+      "sha256": "60c622a70d37a402e66b5507d366da767a71dd29d03858013fb93bd5d7a5bad4"
+    },
+    {
+      "path": "assets/moca/textures/4.png",
+      "bytes": 150952,
+      "sha256": "49f06693a92b0cc10a6eb24b31d01a5600b91e37fed4c0ab3110df52f5e09291"
+    },
+    {
+      "path": "assets/moca/textures/5.png",
+      "bytes": 7621236,
+      "sha256": "59f3338f1b323069dc57fe40bf9c9cde507d3122664c2939396da84b27e1a4fe"
+    },
+    {
+      "path": "assets/moca/walk-rig.bin",
+      "bytes": 52,
+      "sha256": "d94d7a21ca9c371a4a75de9db8a96a6b10f8922e7eb962cdc0edfde65712acdd"
+    },
+    {
+      "path": "assets/moca/walk-rig.json",
+      "bytes": 365,
+      "sha256": "77a65975d8b505c0195abdc9a4f2488f9568b1c0f7444024abaa8bd6af02756c"
+    },
+    {
+      "path": "assets/moca/wave-hip-hop.bin",
+      "bytes": 5102552,
+      "sha256": "818cf224cd1ac4c51f6a3f38d25349e482e90b1a89047469b25026d6dbaf669d"
+    },
+    {
+      "path": "assets/moca/wave-hip-hop.json",
+      "bytes": 3819,
+      "sha256": "13ac07b58070b947251ed184850a4a260183841323afa78c624b3089bd830c8e"
+    },
+    {
+      "path": "assets/NarutoRun.fbx",
+      "bytes": 1838384,
+      "sha256": "9ed947eb6fe3be5bfd2ff1f48692a9690369cfd158f1120d1835381e75d4cc1b"
+    },
+    {
+      "path": "assets/notices/FemaleHead-README.md",
+      "bytes": 4718,
+      "sha256": "0d33ebb3692cb3f548be26fc86c0825be970552c3aded548ca9ac4005c7398ba"
+    },
+    {
+      "path": "assets/notices/FemaleHead-SOURCE.json",
+      "bytes": 1113,
+      "sha256": "219b37ca2a0b7216ef1b7e77c6051e25c1f03673fbec9a9c7d24da837c2775b4"
+    },
+    {
+      "path": "assets/notices/Jolt-LICENSE.txt",
+      "bytes": 1052,
+      "sha256": "800abe35d64ad9defd636ff1ee8c961e06f0ebca3ef8d10083e8aa0e8ef86ac3"
+    },
+    {
+      "path": "assets/notices/JoltHair-SOURCE.md",
+      "bytes": 3414,
+      "sha256": "55b6f89611ee5034feb0359188d6c8a81977f95f1ce5c9dd2acecd465eb6e71e"
+    },
+    {
+      "path": "assets/reference/Unity-validation.log",
+      "bytes": 54399,
+      "sha256": "73dc5580ef9cd31572d7c555ff10ad11f09801d96c57b07cff418796b7f70baa"
+    },
+    {
+      "path": "assets/Reference Hair Image.avif",
+      "bytes": 25941,
+      "sha256": "64c676b9c6d219cf06cf0ce91c5fe6083eb83513a2ea2f1ff944487b01796e76"
+    },
+    {
+      "path": "assets/reference-demo/heldout-slot0.jwp",
+      "bytes": 9264,
+      "sha256": "164a45eeb48512a3123e886a257b68e326ce425e42043a4efe4720924523e7f9"
+    },
+    {
+      "path": "assets/reference-demo/heldout-slot2.jwp",
+      "bytes": 9264,
+      "sha256": "3a4dca4a315313d1b71ff49841edbda54eb5d43f68394286979dc17455e5f150"
+    },
+    {
+      "path": "assets/reference-demo/primary.jwp",
+      "bytes": 9264,
+      "sha256": "21174c8555dd6ede8c2e0fad2365630f329c26ea7a2e229035e8be19617e47cf"
+    },
+    {
+      "path": "assets/reference2.avif",
+      "bytes": 42446,
+      "sha256": "8f3562cb14ed26f43c1c11c7d5339053716de83e578fbec62595c126679e6f04"
+    },
+    {
+      "path": "assets/Wave Hip Hop Dance.fbx",
+      "bytes": 4335968,
+      "sha256": "1ed4f0fe5e12839d0def8f9f2361c6a561a34696d2a9273a8f7c504a6379633a"
+    },
+    {
+      "path": "assets/단발.webp",
+      "bytes": 115630,
+      "sha256": "0d6f4e8413aea760d821a32e24f0831d492689905ec5bea6dda7f2c82c802153"
+    },
+    {
+      "path": "authoring/side-style/metahuman.hair",
+      "bytes": 12868736,
+      "sha256": "f23af264c277cfb0c8c74c273ec6a1b06708fba6209cdc2f652139ac8bd0fca1"
+    },
+    {
+      "path": "authoring/side-style/metahuman.json",
+      "bytes": 56752,
+      "sha256": "ec4c02bd47fe90ec6563ec0e308162aecd88b9295160be8187344eba8e1b1043"
+    },
+    {
+      "path": "authoring/side-style/metahuman.materials",
+      "bytes": 134052,
+      "sha256": "59fd389448c995ceee2860982dd5c8092f1167d999b57a9c8e1c831ae1d359c7"
+    },
+    {
+      "path": "authoring/side-style/NOTICE.txt",
+      "bytes": 350,
+      "sha256": "67524f57665d76fd83c178acdc6ea7f030c6877321479b3f1d333d373ef28567"
+    },
+    {
+      "path": "authoring/sidebang-v15/metahuman.hair",
+      "bytes": 13022336,
+      "sha256": "511051132da6d5a70eee2a98ac59e3abd4351f87aef1ea7b8f3d61a2d2fb12db"
+    },
+    {
+      "path": "authoring/sidebang-v15/metahuman.json",
+      "bytes": 66923,
+      "sha256": "347538132107cf7f51c67611a0bfbab2c8c098104aede03107db694a8adddaf9"
+    },
+    {
+      "path": "authoring/sidebang-v15/metahuman.materials",
+      "bytes": 135652,
+      "sha256": "1158efcae2c2621abf9635c5836616a1f041f0694783e2d0303554d2116cac74"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/convex_hulls.bin",
+      "bytes": 1673972,
+      "sha256": "0d7d48ceccf29e141f5c96cba79325fe50db70753dff1f3abce2faef19b159c0"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/download_hair.sh",
+      "bytes": 273,
+      "sha256": "00cdff99f9baacf3211421d03d13be6d493c6bbc11da72ae5c6dfc5ada306340"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/export_face.py",
+      "bytes": 5140,
+      "sha256": "63f8cd9f9f0f873a4ce95c3b04ec87ad36e659df9e84e5396424a08c667a690f"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/face.bin",
+      "bytes": 828776,
+      "sha256": "25d3e67832856a91c57803985b9e6b61a9be45a611cf37bcecbaa16e6fc3d959"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Fonts/Roboto-Regular.ttf",
+      "bytes": 158604,
+      "sha256": "16466ef65064e6f3885a6d2806b8949ac1ac38b524dd0cf8fc96565eb4cc28e8"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/heightfield1.bin",
+      "bytes": 4194304,
+      "sha256": "7135d49629b4a8cee2812c5af7555d8495f6d12443fcf0bca8d442a8c980d6b8"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Human/dead_pose1.tof",
+      "bytes": 3584,
+      "sha256": "e5f52120658457c19e91646c47cfc67175d873d5c1a1774386519d87ffe57cb7"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Human/dead_pose2.tof",
+      "bytes": 3581,
+      "sha256": "b2870829dd5419678e350cb1f05911f5563528ea38bb9c7654af7da66072d666"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Human/dead_pose3.tof",
+      "bytes": 3579,
+      "sha256": "54058436aa0061f5fccfcbd5f0fb5ccbc96a4e3d6af7fc8b78cb4e22136503f5"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Human/dead_pose4.tof",
+      "bytes": 3581,
+      "sha256": "210b6ddb6acdce91903a47f332efc91a7a85308350e01be1e305ee0b0877a462"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Human/jog_hd.tof",
+      "bytes": 567487,
+      "sha256": "ba06714693bed97f31f5ead379ed562161426221340dedd98d6bd5478f35a023"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Human/neutral.tof",
+      "bytes": 3568,
+      "sha256": "5c8b6747e7702ee8c6ececc103b544346b1f5da4ee2a61e6f6e50184fbbbbfb0"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Human/neutral_hd.tof",
+      "bytes": 10053,
+      "sha256": "9980eaddda1006ae618d1de2458b80a9dd6a3a525a3b9ccbdacd0be5c3bc589d"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Human/skeleton_hd.tof",
+      "bytes": 3495,
+      "sha256": "cefb9692442b9d4c637e62b1f8b88d3c356e5ac0723969b0e52a2aaa534632a7"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Human/sprint.tof",
+      "bytes": 122506,
+      "sha256": "3d81a0b470efe1951c5870df5c1ad930fe4e40872363af09b394509c4a2cba53"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Human/walk.tof",
+      "bytes": 212006,
+      "sha256": "0fb861db3e4fd3bac3f055d012edd8dbd83669068b314fdf0a42b75dda58e595"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Human.tof",
+      "bytes": 30930,
+      "sha256": "d60ab8f0e96e5cfa9c7ea56689b91ecc7d06d73a9d48415542efd09877d55bc6"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/LICENSE",
+      "bytes": 896,
+      "sha256": "7d489a962a36daf08c08ec848cd526264d0e68e98a0eef6bc9a2a9b181b5d6e8"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Racetracks/LICENSE.txt",
+      "bytes": 7817,
+      "sha256": "7d3a95e5e06978064ed3f8e2b7c8f845e7fd8a405294727cc708f94cb83b8059"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Racetracks/README.md",
+      "bytes": 122,
+      "sha256": "a980a03b6d7f1c1ad433ad8b4fd434839759bca4f76b57cc887ad8ea04841604"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Racetracks/Zandvoort.csv",
+      "bytes": 30416,
+      "sha256": "fc529a84f2111a71c18b74c87ee4e13ed94683a52c24ad1c334dc5f78e13f7d2"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/DX/FontPixelShader.hlsl",
+      "bytes": 459,
+      "sha256": "f9d890ac16c9dfc4c87f60025195f8e5bca6934268b44843dabfc84e00fccbdf"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/DX/FontVertexShader.hlsl",
+      "bytes": 639,
+      "sha256": "6c4e86bb13236abf476bd93c479a02572bac42de1bd7339a4151b7204a6c0a6c"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/DX/LinePixelShader.hlsl",
+      "bytes": 248,
+      "sha256": "00a24906ea8b53c682026e6ed7322c6f4f4a15d606fefdd14daa645a370b8a5f"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/DX/LineVertexShader.hlsl",
+      "bytes": 538,
+      "sha256": "6a69268c92b3c74b2d54d410de9b28bdab979cbcca4c46e040dbd4688073e024"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/DX/TriangleDepthPixelShader.hlsl",
+      "bytes": 72,
+      "sha256": "b8eb6c7511bad8a1e0b92847073e9c8e9606f77159a9862e5dbc8c9ee195ebed"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/DX/TriangleDepthVertexShader.hlsl",
+      "bytes": 997,
+      "sha256": "cacf18e061e615f39a3d41e06fb5f37b7a4167ee43eec92751c3174396eeab48"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/DX/TrianglePixelShader.hlsl",
+      "bytes": 4471,
+      "sha256": "154bc0c1b86b6242f3ff6a301a29fcadc67922d975bea29f5e4fee33cb74820f"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/DX/TriangleVertexShader.hlsl",
+      "bytes": 1525,
+      "sha256": "2edf5cbd1de701a14be02ecc42d4e5cec18e1dec8692d729eeb34e7179dc1aed"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/DX/UIPixelShader.hlsl",
+      "bytes": 402,
+      "sha256": "bb77fa5a6f9bf0c43a3cc0f4e1ae21d32cd6519283ccb51392554cff2d662d87"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/DX/UIPixelShaderUntextured.hlsl",
+      "bytes": 275,
+      "sha256": "ca0e16f9b1f092f3173f934742a0b4ded891b4410e8982a57dc1ed328140147e"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/DX/UIVertexShader.hlsl",
+      "bytes": 598,
+      "sha256": "72fb2bc2ae536338a42c09f9aee8a727e0c164b637243e11ebbb8065f5fd8362"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/DX/VertexConstants.h",
+      "bytes": 242,
+      "sha256": "edcb20288409752acd2f574a2b02ee6082826f9646200ee7ada97fdac963bad7"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/MTL/FontShader.metal",
+      "bytes": 1003,
+      "sha256": "b2bddb145b7843d2aa6fe2485f84976ee4ce46a6c7f7975d3c65c6d9d7b05253"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/MTL/LineShader.metal",
+      "bytes": 658,
+      "sha256": "a71c8436c07d7da61689b34c427ad6d88e19567844ac89d17b89db572ea79932"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/MTL/TriangleShader.metal",
+      "bytes": 6773,
+      "sha256": "14693ee114858285b902922830402f17278c64f4f21ccd1c542ef5ed6b894f35"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/MTL/UIShader.metal",
+      "bytes": 1010,
+      "sha256": "de281b4f83acc0d19acf5416462c2f95428a5585028496c28aebef6bc7df3a42"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/MTL/VertexConstants.h",
+      "bytes": 324,
+      "sha256": "713302357b44f95710fb5269d4e1374453f1cab1edb9a97314e2d3f7e68a348c"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/VK/FontPixelShader.frag",
+      "bytes": 317,
+      "sha256": "48bb62e7d8e5997163cc5666389fd852f4831f4df7e1fb1e8f3a40d0112b6b14"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/VK/FontVertexShader.vert",
+      "bytes": 346,
+      "sha256": "c1047588efaf93f057f48f431c634ac30557fc08d3d4e85f160a2925d3701b34"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/VK/LinePixelShader.frag",
+      "bytes": 136,
+      "sha256": "705e98a1da95108e995a5d0889e4efa78cb298727654efa7ce5527fd4e4023ac"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/VK/LineVertexShader.vert",
+      "bytes": 277,
+      "sha256": "4bb4b26ad75de3646f794efd87591791f7ee883239f67319189561fee4cfea64"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/VK/TriangleDepthPixelShader.frag",
+      "bytes": 88,
+      "sha256": "afde44024474f8edaf51f6aaf7ca2630186a10ba2e1aa38ce45d7e58ed6adc13"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/VK/TriangleDepthVertexShader.vert",
+      "bytes": 751,
+      "sha256": "358cdc93885311a54f2d8144b14eb96e1a52a04e01bbaac67ecf09c2dfc8bf3c"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/VK/TrianglePixelShader.frag",
+      "bytes": 3838,
+      "sha256": "77967f3713a278881cd1119bf1bc6cf5f870f06f51734d0db86825a331693db2"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/VK/TriangleVertexShader.vert",
+      "bytes": 1274,
+      "sha256": "4f387b9925e78e984e347fb15138ddccffb2c4a086f91f4d4300e9ac4eabff53"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/VK/UIPixelShader.frag",
+      "bytes": 261,
+      "sha256": "4ddc5932a53f264dbcef8700cd665763c9e7256f67cb0b76e0265b616fba318e"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/VK/UIPixelShaderUntextured.frag",
+      "bytes": 135,
+      "sha256": "b707c6473a4d6eb7485f323c1c0157754c4b5219abb9cb655bbadf330639ae5f"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/VK/UIVertexShader.vert",
+      "bytes": 346,
+      "sha256": "9f2b748094819fbb493e5c8de29c46bfeb047e47791cc117c1b36fbbca0bbcba"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/Shaders/VK/VertexConstants.h",
+      "bytes": 139,
+      "sha256": "97777bed02caed14143e6ceeed94577862dae8d3164b797d68dc0711d47d5203"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/terrain1.bof",
+      "bytes": 8586630,
+      "sha256": "96ccf4a2852e616630ad8297ee33dfef93c646dea6aa34ea967ca00e4001f8d9"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/terrain2.bof",
+      "bytes": 5786213,
+      "sha256": "c62e32c197563030e1ec8b7859406aec00fb319aadd5549910640516bdb88d81"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/UI.tga",
+      "bytes": 65554,
+      "sha256": "c9b421e15fe4ece83eff6926aaba47f0984b092048e4aa7e017a57629c1bf208"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/wCurly.hair",
+      "bytes": 41399088,
+      "sha256": "a011666773258c0b8606cde72f24d78294e7bce5b587bddad6b91ff3c488c916"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/wStraight.hair",
+      "bytes": 15000128,
+      "sha256": "3225a722b7346c15a7be6ab897bee012f19d373940647cb6f085f832a2ddfcb4"
+    },
+    {
+      "path": "third_party/JoltPhysics/Assets/wWavy.hair",
+      "bytes": 29400128,
+      "sha256": "ee264968bb3cfb7a0952226f86040851350237d95d5ca3d405070165a3b028ff"
+    }
+  ]
+}

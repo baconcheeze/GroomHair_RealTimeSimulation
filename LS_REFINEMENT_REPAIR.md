@@ -1,0 +1,126 @@
+# Original-LS Residual Refinement CPU Repair
+
+## 판정
+
+**strict CPU accuracy repaired.** 동일 double structured Cholesky factor를 재사용하면서, original augmented A64/b64의 잔차와 transpose 곱을 80자리로 계산하는 보정이 strict CPU 정확도를 회복했다. 원래 실패9개 checkpoint와 통제4개 모두 통과했고, 이어서83개 선형 비교 및12개 비선형 비교도 통과했다.
+
+이는 GPU 포팅 승인, float32 검증, 5초 dynamics 성공 또는 production sliding-window 수렴 문제 해결을 뜻하지 않는다. 생산 코드/셰이더/설정/자산과 역사적 보고서·기대값은 변경하지 않았다.
+
+## 고정 입력과 목표
+
+기존 QR_NULLSPACE_AUDIT.md의 binary64 hex 입력을 그대로 읽었다. 이들은 이전 기록을 byte-identical하게 재현한 instrumented replay에서 동결한 자료이지 과거 raw bits를 복구한 자료가 아니다. 이 provenance 한계를 유지한다. 최초13개 실험에서 A/b를 물리 fixture로부터 재생성하지 않았다. 기존 high-precision A/B 해는 오차 평가에만 사용했고 보정 RHS 계산에 사용하지 않았다.
+
+주 목표는 min ||A64 u−b64||². 저장된 A64에는 sqrt(lambda) 정규화 행이 이미 포함돼 있으므로 보정에 lambda를 추가하지 않는다. M64/c64와 그 double block Cholesky factor는 근사 풀이/preconditioner일 뿐 목표 정의가 아니다. primitive J/r/D/lambda rebuilt LS(C)는 이번 보정의 목표가 아니다. 기존 C oracle도 보존했으며 이번에 다시 계산하지 않았다.
+
+factor init M64는 실제 동결된 scaled/regularized 행렬을 사용한다. 기존 blockSolve에서 factor와 RHS triangular solve의 lifetime만 분리했으며 연산 순서를 유지했다. 최초13개 및 확대83개에서 u0와 실제 unscale delta가 이전 blockU/blockDelta와 bitwise 같음을 검사했다.
+
+## 두 잔차 경로
+
+- 대조군 normal: 80자리에서 s=c64−M64 u를 계산한다. 같은 double factor로 보정하므로 frozen-normal 해 B를 목표로 한다.
+- 후보 LS: 80자리에서 r=b64−A64 u를 먼저 구하고 이어 s=A64ᵀ r를 완전히 누적한다. 그 후에만 s를 binary64로 변환한다. AᵀA를 만들지 않는다.
+
+양쪽 모두 factor는 각 linearization/lambda trial당1회, 초기 triangular solve1회, correction5회다. correction마다 같은 L/C를 재사용하며 native forward/back substitution으로 du를 구하고 **u+=du를 binary64에서 수행**한다. 해/보정은 projection·rank truncation·추가 pin 없이 unscale한다. 0~5회 전부 기록하고 cap을 늘리지 않았다.
+
+## 정밀도와 구현 경계
+
+|항목|실제 구현/정밀도|
+|---|---|
+|M64 factorization / triangular solve|MSVC C++ double binary64, /fp:precise|
+|LS r 및 Aᵀr, normal residual|Python decimal/libmpdec, 80 decimal digits|
+|실패9개 재확인|동일 알고리즘120 decimal digits|
+|correction RHS 전송|완전 누적 후 binary64로1회 반올림|
+|u 누적 및 unscale|native C++ binary64|
+|비선형 retraction / line search|기존 C++ binary64 apply와 물리 F|
+|동결 선형 quaternion 거리 평가|기존 audit의120자리 retraction/atan2, 평가 전용|
+
+Windows long double이나 high-precision-u 후보는 사용하지 않았다. core.py는 oracle 모듈을 import하지 않는다. persistent Python↔C++ binary pipe로 factor와 solve를 호출한다. subprocess/IPC 메커니즘 프로토타입이며 빠른 native residual 구현이라는 주장을 하지 않는다.
+
+## 동결 결과
+
+원래83개 기록은74 pass/9 fail 그대로이고, 별도의 후보 결과만 추가했다. 9개 checkpoint는2개 fixture에 속하며 중복 초기 기록을 제외하면7개 선형 입력이다. 실제 lambda(1e-8,2e-9,4.0000000000000007e-10)는 그대로다.
+
+|실패 checkpoint|초기 angle→A(rad)|normal 보정5회→A|LS 보정1회→A|LS 보정2회→A|LS 보정5회→A|
+|---|---:|---:|---:|---:|---:|
+|synthetic-2-pins0__original_initial|4.8678e-09|3.1079e-09|5.3546e-17|4.5156e-18|4.5156e-18|
+|synthetic-2-pins0__preserved_sequential32|3.6219e-09|2.3387e-09|8.8464e-18|8.8464e-18|8.8464e-18|
+|synthetic-2-pins0__reference_phase0_iter0|4.8678e-09|3.1079e-09|5.3546e-17|4.5156e-18|4.5156e-18|
+|synthetic-2-pins0__reference_phase0_iter1|7.2984e-09|8.2430e-09|3.2229e-16|4.1216e-18|4.1216e-18|
+|synthetic-2-pins1__original_initial|1.0403e-08|3.1225e-09|1.1082e-16|5.9110e-18|5.9110e-18|
+|synthetic-2-pins1__preserved_sequential32|1.5405e-09|2.0929e-09|1.0817e-17|1.0817e-17|1.0817e-17|
+|synthetic-2-pins1__reference_phase0_iter0|1.0403e-08|3.1225e-09|1.1082e-16|5.9110e-18|5.9110e-18|
+|synthetic-2-pins1__reference_phase0_iter1|8.3609e-09|5.5335e-09|1.0273e-16|1.4397e-18|1.4397e-18|
+|synthetic-2-pins1__reference_phase0_iter2|1.1831e-09|8.2670e-10|1.9672e-16|1.5688e-19|1.5688e-19|
+
+normal 대조군은9개 중1개만 기존 A forward 기준을 통과했다. 나머지8개는 형성 오차를 남겼다. LS 후보의 실패 checkpoint 최종 최대 raw physical rotation-vector 오차는 1.0817e-17 rad였다. 80자리와120자리 잔차 경로는 실패9개의 모든 iteration에서 binary64 u/delta가 bitwise 같았다. 따라서 이번 개선은80자리 잔차 누적 정밀도에 제한되지 않았다.
+
+원래 기준의 physical position 1e-10 m / rotation 1e-9 rad와 기존 상대 기준, scaled increment 상대1e-7 또는 absolute-small 허용을 그대로 사용했다. 특히 tangent 유사성을 quaternion gate 대용으로 쓰지 않았다. 입력 크기로 정규화한 LS stationarity ≤5e-14도 확대 suite에서 확인했다. M64 residual은 원래 LS와 다른 목표이므로 측정값으로 별도 남기며, normal 해를 목표로 바꿔 통과시키지 않는다.
+
+0,1,2,3,4,5의 position/raw rotation/retracted angle/scaled error, A/B/validated double QR 비교, null/orthogonal 분해, LS stationarity, normal backward error, du 크기, lostComponentUpdates 및 stagnated는 frozen-curves.csv와 각 frozen-repair JSON에 모두 보존했다. 마지막 binary64 output으로 판정했으며 내부 decimal oracle의 정확도만으로 통과시킨 것이 아니다. 2~3회 후 더해도 binary64 u가 바뀌지 않는 사례는 정체로 기록했다. 작은 잔차만으로 forward accuracy를 대체하지 않았다.
+
+## 확대83 및 비선형12
+
+작은 동결 사례 통과 후에만83개 checkpoint를 export했다. 기존 기록은 다시 byte-identical, 이전13개 frozen 파일도 byte-identical함을 확인했다. 모든 사례에 동일80자리/5회 보정을 적용했고 fixture 이름이나 source ID를 solver에서 분기하지 않았다. 83개 확대 비교는 각 matching A64/b64의 validated double QR에 대한 기존 forward gate와 LS stationarity를 사용한다. 새로83개 전체의 arbitrary-precision oracle을 다시 푼 것은 아니며13개 동결 HP 통제로 정확도를 확인했다. 최종 최대 입력-relative LS stationarity는 4.2121e-17다.
+
+비선형 adapter는 기존 residual/Jacobian, scale, lambda retry, normalize/retraction, physical-energy strict-decrease line search와 convergence tolerance를 유지한다. **새 선형화/lambda trial마다** matching binary64 A/b 및 M/c를 만들고 factor1회+보정5회를 수행한다. 이것은 추가 시간 substep/PQ sweep이 아니다. 실제 새 선형 입력도 linear-inputs/*.bin으로 보존했다.
+
+|입력|기존/후보 accepted|후보 rejected|최종 위치 max 차이(m)|q max 차이(rad)|F 차이(J)|qualified|
+|---|---:|---:|---:|---:|---:|---|
+|heldout-slot0|7/7|0|1.7776e-17|6.5292e-16|8.4703e-22|True|
+|heldout-slot2|6/6|0|8.6944e-17|1.2927e-15|-1.0588e-21|True|
+|primary|3/3|0|2.5019e-17|5.5842e-16|-4.0532e-23|True|
+|synthetic-2-pins0|4/4|0|6.1041e-19|1.5142e-08|7.5100e-28|True|
+|synthetic-2-pins1|4/4|0|5.4278e-19|1.0571e-08|6.3109e-29|True|
+|synthetic-2-pins2|2/2|0|4.2033e-17|0.0000e+00|1.6156e-27|True|
+|synthetic-2-pins3|2/2|0|1.0340e-25|0.0000e+00|0.0000e+00|True|
+|synthetic-5-pins0|4/4|0|1.3463e-18|1.3907e-10|-1.0097e-28|True|
+|synthetic-5-pins1|4/4|0|1.9166e-20|3.7055e-11|-4.0390e-28|True|
+|synthetic-5-pins2|3/3|0|8.9381e-19|5.6821e-21|0.0000e+00|True|
+|synthetic-5-pins3|3/3|0|1.0588e-22|3.3897e-21|0.0000e+00|True|
+|tie-jacobian-only|5/5|0|1.0588e-22|5.0822e-21|0.0000e+00|True|
+
+모든12개가 기존 qualified tolerance와 기존 위치/물리 objective 비교를 통과했다. q 차이는 버리지 않고 보고했다. 과거 normal step의 rounding을 bitwise 재현하도록 강제하지 않았다. 승인 반복 수는 모두 같았고 이번 run의 rejected trials는0이었다. pinned root 성분은 정확히 유지됐다. 최종 residual·tip displacement vector·전체 F 곡선·trial CSV는 nonlinear-repair/*에 있다. reference는 검증된 수치 비교일 뿐 비선형 global optimum을 증명하지 않는다.
+
+총47개 새 선형 trial에 factor47회, 초기 solve47회, correction solve235회였다. factor/solve failure는0이었다. 원래13개에는 normal/LS 두 실험 및120자리 확인이 포함되며 각각의 factor/count를 별도로 기록했다.
+
+## CPU 비용과 저장량
+
+입력/oracle 파싱과 결과 파일쓰기를 timed region 밖에 두고, persistent host에서 warm-up2 + 측정9회 반복했다. 아래는 **CPU wall ms**이며 GPU 시간으로 해석할 수 없다. residual 시간은5회의 합, correction solve는5개 native solve의 합이다. mechanism total에는 준비/IPC가 포함되고 process 시작 비용은 제외한다.
+
+|입력(n)|전체 median/P95(ms)|residual5회 median|factor median|correction solve5회 median|
+|---|---:|---:|---:|---:|
+|primary__original_initial (183)|12.3880/15.4350|7.0954|0.0241|0.0181|
+|synthetic-2-pins0__original_initial (9)|0.5985/0.7239|0.2581|0.0010|0.0035|
+|synthetic-2-pins1__original_initial (6)|0.3736/0.5495|0.1445|0.0006|0.0016|
+
+timing.json에는 setup, 초기 solve, native solve, IPC roundtrip을 분리한 raw samples가 있다. roundtrip에는 해당 native 작업 시간도 포함되므로 합산하면 이중 계산된다. 전체−numerical의 차이에는 IPC/변환/배열 준비/Python 제어가 포함된다. 비선형 CPU wall 역시 pipe 대기와 입력 변환을 포함하며 실시간 성능 근거가 아니다.
+
+native factor의 L/C만은 station당 고정6×6으로 O(N)이다. 그러나 이 프로토타입은 아직 **dense J/A/M을 조립·전송**한다. primary n183: A payload720288B, M267912B, 기존 native J452376B다. 원래 band-storage 이점을 전체 후보가 유지한다고 주장하지 않는다. residual 계산 자체는 zero를 제외한 sparse row list로 구현했지만 native sparse 조립/전송은 구현하지 않았다.
+
+primary의 Python decimal original-LS row+b 실제 object graph는 369588B, normal row+c는 400612B였다. dense A Python 입력 object graph는 2912920B다. sys.getsizeof 기반이며 allocator/모듈/IPC buffer overhead를 제외한다. raw storage.json에 경계를 명시했다. 이 후보는 정확도 메커니즘 검증이지 완성된 저메모리 native 구현이 아니다.
+
+## 재현
+
+프로젝트 루트 PowerShell, 새 출력 경로 사용:
+
+```powershell
+cmake -S diagnostics/ls-refinement -B build/ls-refinement -G "Visual Studio 17 2022" -A x64
+cmake --build build/ls-refinement --config Release --target LSFactorHost LSExportSuite LSRefinedReference
+python diagnostics/ls-refinement/frozen.py artifacts/qr-nullspace/20261030T145943Z artifacts/ls-refinement/replay/frozen-repair build/ls-refinement/bin/Release/LSFactorHost.exe
+# 위 동결 기준 통과 후 확대 실행:
+$env:QRAUDIT_OUT="$PWD/artifacts/ls-refinement/replay/suite-inputs"
+& ./build/ls-refinement/bin/Release/LSExportSuite.exe --inputs artifacts/strand-block/20261030T141357Z/inputs --out artifacts/ls-refinement/replay/old-suite-replay --timing no
+# exporter는 원래 실패를 유지하므로 예상 exit=1
+python diagnostics/ls-refinement/broader.py suite artifacts/ls-refinement/replay/suite-inputs artifacts/ls-refinement/replay/suite-repair-final build/ls-refinement/bin/Release/LSFactorHost.exe
+python diagnostics/ls-refinement/broader.py nonlinear build/ls-refinement/bin/Release/LSRefinedReference.exe artifacts/strand-block/20261030T141357Z/inputs artifacts/ls-refinement/replay/nonlinear-repair build/ls-refinement/bin/Release/LSFactorHost.exe
+python diagnostics/ls-refinement/timing.py artifacts/qr-nullspace/20261030T145943Z artifacts/ls-refinement/replay/timing.json build/ls-refinement/bin/Release/LSFactorHost.exe
+python diagnostics/ls-refinement/storage.py artifacts/qr-nullspace/20261030T145943Z artifacts/ls-refinement/replay/storage.json
+python diagnostics/ls-refinement/summarize.py artifacts/ls-refinement/replay
+```
+
+Release MSVC14.44, C++20 /fp:precise 및 Python 표준 decimal만 사용했다. 새 큰 수치 라이브러리는 설치하지 않았다. 결과·manifest·원시 bit/hash는 artifacts/ls-refinement/20261030T152921Z 아래에 있다. diag source 생성은 generate-export.py로 이전 감사의 계측 emitter를 복사한 것뿐이며 production 파일은 변경하지 않는다.
+
+## 보존 및 정지
+
+이전 감사 manifest 579개, production/source/runtime 90개, 보존 research runtime 37개 해시를 확인해 변경0개였다. 원래83개/9개 실패와12개 비선형 결과는 새 결과로 덮어쓰지 않았다. 이전 문서도 그대로다.
+
+추가·수정 범위는 diagnostics/ls-refinement/*, 신규 artifacts/ls-refinement/*와 본 문서다. GPU solver/default/research candidate/asset/physics를 변경하지 않았다. Unity 접근, GPU 포팅, float32 변환, full-groom 장기 실행은 하지 않았다. strict CPU repair까지만 완료하고 여기서 종료한다.

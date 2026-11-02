@@ -1,0 +1,38 @@
+# Generated builds, local runtime copies, experiments and editor state
+/build/
+/artifacts/
+/checkpoints/
+/.vs/
+/.idea/
+/.vscode/
+imgui.ini
+*.user
+*.suo
+*.obj
+*.pdb
+*.ilk
+*.pch
+*.exe
+*.dll
+*.lib
+*.dxil
+*.cso
+__pycache__/
+*.pyc
+
+# Purchased/source/converted character assets remain local (separate backup).
+/assets/
+/authoring/
+/third_party/JoltPhysics/Assets/
+
+# Local credentials and agent configuration
+/.aws/
+/.codex/
+/.agents/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12

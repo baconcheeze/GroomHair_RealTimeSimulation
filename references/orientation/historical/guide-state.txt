@@ -1,0 +1,5 @@
+Guide state: strands=2839, vertices=90848, segments=88009, bends=85170
+Length m: min=0.00317280856, max=0.0117067927, average=0.007284504, degenerate=0
+Position max=0 m, RMS=0 m; velocity max=0 m/s; orientation max=0 rad
+Tangent max=4.6112072E-07 rad; quaternion normalization max=1.1920929E-07; sign flips=0
+Rest shear/stretch max=5.04008369E-07; bend/twist reconstruction max=0 rad
